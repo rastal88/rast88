@@ -1,22 +1,23 @@
 from flask import Flask, render_template, request
 import psycopg2
 import json
+import os
 
 app = Flask(__name__)
 
 # PostgreSQL connection parameters
-db_params = {
-    'dbname': 'mydatabase',
-    'user': 'myuser',
-    'password': 'mypassword',
-    'host': 'localhost',
-    'port': '5432'
+DB_PARAMS = {
+    'dbname': os.environ.get('DB_NAME'),
+    'user': os.environ.get('DB_USER'),
+    'password': os.environ.get('DB_PASSWORD'),
+    'host': os.environ.get('DB_HOST'),
+    'port': os.environ.get('DB_PORT')
 }
 
 
 def get_connection():
     # Establish a connection to the PostgreSQL database
-    return psycopg2.connect(**db_params)
+    return psycopg2.connect(**DB_PARAMS)
 
 
 def create_table():
