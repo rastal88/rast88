@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Saved Data</title>
+</head>
+<body>
+    <h1>Сохраненные данные:</h1>
+    <ul>
+        {% for saved_input in saved_inputs %}
+            <li>{{ saved_input }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Вернуться на главную страницу</a>
+</body>
+</html>

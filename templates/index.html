@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Input Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var inputCount = {{ input_count|tojson }};
+
+            function addInput() {
+                var newInput = '<input type="text" name="name' + inputCount + '"><br>';
+                $('#input-container').append(newInput);
+                inputCount++;
+            }
+
+            $('#add-button').click(function() {
+                addInput();
+            });
+        });
+    </script>
+</head>
+<body>
+    <form method="POST" action="/">
+        <div id="input-container">
+            <input type="text" name="name0"><br>
+        </div>
+        <button type="button" id="add-button">Добавить</button>
+        <input type="hidden" name="input_count" value="{{ input_count }}">
+        <input type="submit" value="Сохранить">
+    </form>
+
+    <a href="{{ url_for('view_data') }}">Просмотреть сохраненные данные</a>
+</body>
+</html>
