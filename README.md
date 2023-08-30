@@ -2,7 +2,7 @@
 
 # Руководство по развертыванию приложения с использованием Nginx, Gunicorn и базы данных PostgreSQL
 
-## Шаг 1: Установка необходимых зависимостей
+## Шаг 1: Установка необходимых зависимостей,
 
 Убедитесь, что у вас установлены `gunicorn`, `nginx` и PostgreSQL. Если они еще не установлены, вы можете установить их с помощью следующих команд:
 
@@ -20,7 +20,12 @@ git clone https://github.com/ваш-путь-к-репозиторию.git
 cd ваш-путь-к-репозиторию
 ```
 
-## Шаг 3: Установка зависимостей из requirements.txt
+## Шаг 3: Установкаб виртуального окружения, зависимостей из requirements.txt
+Добавте и активируйте виртуальное окружение:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
 Установите зависимости из файла requirements.txt, чтобы удостовериться, что все необходимые пакеты установлены:
 ```bash
@@ -64,6 +69,13 @@ WantedBy=multi-user.target
 ```
 Сохраните и закройте файл.
 
+После создания файла myapp.service и внесения необходимых изменений, выполнить следующие действия:
+```bash
+sudo systemctl enable myapp  # Чтобы сервис запускался при загрузке системы
+sudo systemctl start myapp   # Чтобы запустить сервис
+```
+Для остановки сервиса используйте sudo systemctl stop myapp, а для перезапуска sudo systemctl restart myapp.
+
 ## Шаг 6: Настройка Nginx
 
 Создайте конфигурационный файл для Nginx:
@@ -80,6 +92,9 @@ server {
     location / {
         include proxy_params;
         proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 
     location /static {
@@ -96,10 +111,17 @@ server {
 sudo ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled
 ```
 
+Получите и установите SSL-сертификат от Let's Encrypt с помощью Certbot:
+```bash
+sudo apt-get install certbot python3-certbot-nginx
+sudo certbot --nginx
+```
+
 Перезапустите Nginx:
 ```bash
 sudo systemctl restart nginx
 ```
+
 ## Шаг 7: Запуск Gunicorn и проверка
 
 Запустите Gunicorn через systemd:
