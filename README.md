@@ -11,24 +11,42 @@ pip install gunicorn
 sudo apt-get install nginx
 sudo apt-get install postgresql postgresql-contrib
 ```
-Шаг 2: Клонирование репозитория
+
+## Шаг 2: Клонирование репозитория
+
 Сначала склонируйте свой репозиторий с помощью команды:
 ```bash
 git clone https://github.com/ваш-путь-к-репозиторию.git
 cd ваш-путь-к-репозиторию
 ```
 
-Шаг 3: Установка зависимостей из requirements.txt
+## Шаг 3: Установка зависимостей из requirements.txt
+
 Установите зависимости из файла requirements.txt, чтобы удостовериться, что все необходимые пакеты установлены:
 ```bash
 pip install -r requirements.txt
 ```
-Шаг 4: Настройка базы данных PostgreSQL
+
+## Шаг 4: Настройка базы данных PostgreSQL
+
+В файле приложения app.py изменить значения словаря db_params
+```python
+db_params = {
+    'dbname': 'mydatabase',
+    'user': 'myuser',
+    'password': 'mypassword',
+    'host': 'localhost',
+    'port': '5432'
+}
+```
+
+
+## Шаг 5: Настройка Gunicorn
+
 Создайте сервисный файл для Gunicorn:
 ```bash
 sudo nano /etc/systemd/system/myapp.service
 ```
-
 Вставьте следующий код, заменив <путь_к_папке_проекта> на реальный путь к папке, в которой находится app.py:
 ```ini
 [Unit]
@@ -46,7 +64,8 @@ WantedBy=multi-user.target
 ```
 Сохраните и закройте файл.
 
-Шаг 6: Настройка Nginx
+## Шаг 6: Настройка Nginx
+
 Создайте конфигурационный файл для Nginx:
 ```bash
 sudo nano /etc/nginx/sites-available/myapp
@@ -81,7 +100,8 @@ sudo ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled
 ```bash
 sudo systemctl restart nginx
 ```
-Шаг 7: Запуск Gunicorn и проверка
+## Шаг 7: Запуск Gunicorn и проверка
+
 Запустите Gunicorn через systemd:
 ```bash
 sudo systemctl start myapp
