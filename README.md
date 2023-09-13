@@ -33,16 +33,14 @@ pip install -r requirements.txt
 ```
 
 ## Шаг 4: Настройка базы данных PostgreSQL
-
-В файле приложения app.py изменить значения словаря db_params
+Файл ".env.example" переименуйте в ".env"
+В нем измените значения  на свои
 ```python
-db_params = {
-    'dbname': 'mydatabase',
-    'user': 'myuser',
-    'password': 'mypassword',
-    'host': 'localhost',
-    'port': '5432'
-}
+DB_NAME=ваша_база_данных
+DB_USER=ваш_пользователь
+DB_PASSWORD=ваш_пароль
+DB_HOST=ваш_хост
+DB_PORT=ваш_порт
 ```
 
 
