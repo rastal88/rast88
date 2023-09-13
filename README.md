@@ -36,11 +36,11 @@ pip install -r requirements.txt
 Файл ".env.example" переименуйте в ".env"
 В нем измените значения  на свои
 ```python
-DB_NAME=ваша_база_данных
-DB_USER=ваш_пользователь
-DB_PASSWORD=ваш_пароль
-DB_HOST=ваш_хост
-DB_PORT=ваш_порт
+DB_NAME='ваша_база_данных'
+DB_USER='ваш_пользователь'
+DB_PASSWORD='ваш_пароль'
+DB_HOST='ваш_хост'
+DB_PORT='ваш_порт'
 ```
 
 
